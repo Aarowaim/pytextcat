@@ -4,7 +4,8 @@ import os
 
 # find hangman game data
 game_files = []
-for fname in os.listdir('.'):
+current_dir = os.path.dirname(os.path.abspath(__file__))
+for fname in os.listdir(current_dir):
     if fname.endswith('.hman'):
         game_files.append(fname)
 
@@ -24,7 +25,8 @@ while True:
     except ValueError as e:
         print('\n' + str(e))
 
-game_data = TextCatalog(game_files[selection])
+fname = os.path.join(current_dir, game_files[selection])
+game_data = TextCatalog(fname)
 substitutions = [[] for i in range(10)]
 
 # find numbers to substitute in the ascii art
