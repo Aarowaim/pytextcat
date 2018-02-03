@@ -6,33 +6,39 @@ The idea is simple:
 ## What is a "Text Catalog"?
 Text storage is a very common problem and I needed a simple, portable format to manage walls of text without polluting my source code.
 Python text catalogs are a simple way to edit, access, and keep track of all the text your program needs.
-They're utf-8 plaintext files formatted into entries, and each entry consists of a *label line* which is followed by *text*. the entry ends when a new *label line* is encountered. *text* that ends with a newline does not include the final newline, but does include any previous newlines, to allow a blank line for readability and trim newlines in densely packed data.
+They're UTF-8 plaintext files formatted into entries, and each entry consists of a *label line* which is followed by *text*. the entry ends when a new *label line* is encountered. *text* that ends with a newline does not include the final newline, but does include any previous newlines, to allow a blank line for readability and trim newlines in densely packed data.
 
 Although there are many domain-specific libraries for this purpose, very few of them are generic, simple, and ported to a variety of languages. This format was designed to fill that niche, and it's handy enough to share. It's also simple enough to port.
 
-It should be noted that text catalogs are **not** a library, such as this one. They are a utf-8 plaintext file format designed to be easy to write, and easy to port between languages. **A conforming implementation must detect whether `\n`, `\r`, `\n\r`, `\r\n` newlines are used in a file** (observing platform convention is not enough to make a file portable). The library must present **platform-specific newline sequences** so that programs can be confident that dumping *text* from the catalog into stdout will render as expected.
+It should be noted that text catalogs are **not** a library, such as this one. They are a UTF-8 plaintext file format designed to be easy to write, and easy to port between languages. **A conforming implementation must detect whether `\n`, `\r`, `\n\r`, `\r\n` newlines are used in a file** (observing platform convention is not enough to make a file portable). The library must present **platform-specific newline sequences** so that programs can be confident that dumping *text* from the catalog into stdout will render as expected.
 
 ## How do I Install this Package?
 
 Using the commandline may be unfamiliar and new to some programmers. Before you try these commands, make sure you have installed `git` and `pip` on your system by running these commands in your terminal:
 
-    git --version
-    pip --version
-    
+```
+git --version
+pip --version
+```
+
 If you haven't received errors, you can install this package (which was developed on python 3.6.4) by running these commands:
 
-    git clone https://github.com/Aarowaim/pytextcat.git
-    cd pytextcat
-    pip install .
-    
+```
+git clone https://github.com/Aarowaim/pytextcat.git
+cd pytextcat
+pip install .
+```
+
 Make sure you were running the commands as an admin (`sudo` on linux), `Run as Administrator` on windows. You should be able to write your own text catalogs now!
 
 Here's a simple example of using the package:
 
-    from pytextcat import TextCatalog
+```python
+from pytextcat import TextCatalog
 
-    my_catalog = TextCatalog('my_file.txt')
-    print(my_catalog['my_label'])
+my_catalog = TextCatalog('my_file.txt')
+print(my_catalog['my_label'])
+```
 
 ## How do I Write a Text Catalog?
 Lines with labels always begin with `[` and end with `\n` (an auto-detected newline). Everything until `]` is considered the *label*, and is the name used to access the text.
@@ -42,9 +48,11 @@ It's okay to forget whitespace at the end of a label's line, but any other type 
 Then everything after the label's line is considered the *text*, until a new label line appears. There's one feature that was added for convenience. If the `\n` (auto-detected newline) is the __last character in *text*__, it is ignored. This means that you can leave 1 blank line after each entry so that the file is more readable. If you want more whitespace, consider using `.lstrip()` once the file is loaded in python.
 An example catalog is provide below, and is compatible with the previous usage example:
 
-    [my_label]        
-    Hello world,
-    Look at these newlines!
+```ini
+[my_label]
+Hello world,
+Look at these newlines!
+```
 
 ## What are Some Usecases for Text Catalogs?
 Text catalogs are a very simple format that removes the need for `\n` and `\t` in strings you write for your program. You can write one in your favourite text editor.
