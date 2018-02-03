@@ -1,0 +1,44 @@
+[gallows]
+  o===o
+  |/ \|
+  |   O
+  |  /|\
+  |  / \
+ /|
+=========
+
+[steps]
+  o===o
+  |/ \|
+  |   0
+  |  213
+  |  4 4
+ /|
+=========
+
+[win]
+    /==================\
+    | Hooray! You won! |
+    \==================/
+   /
+
+ \o/
+  |
+ / \
+
+[words]
+stadium
+protest
+staircase
+confidence
+source
+price
+hills
+banana
+saltshaker
+mosquito
+trouble
+courage
+fountain
+fiber
+transport

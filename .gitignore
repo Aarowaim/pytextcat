@@ -29,7 +29,10 @@ wheels/
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
+<<<<<<< HEAD
 MANIFEST
+=======
+>>>>>>> fa6a7bcff1435c82d109d1f5f20d45f36603c2a7
 *.spec
 
 # Installer logs
