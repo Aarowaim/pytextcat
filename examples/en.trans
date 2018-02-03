@@ -1,0 +1,5 @@
+[greeting]
+Hello {}!
+
+[prompt]
+Please enter your name: 
