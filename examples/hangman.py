@@ -2,6 +2,7 @@ from pytextcat import TextCatalog
 import random
 import os
 
+
 # find hangman game data
 game_files = []
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -9,6 +10,8 @@ for fname in os.listdir(current_dir):
     if fname.endswith('.hman'):
         game_files.append(fname)
 
+
+# Prompt player to choose game data for the theme
 while True:
     print('Please choose a file from the list:')
 
@@ -25,30 +28,43 @@ while True:
     except ValueError as e:
         print('\n' + str(e))
 
+
+# Load the selected theme
 fname = os.path.join(current_dir, game_files[selection])
 game_data = TextCatalog(fname)
-substitutions = [[] for i in range(10)]
 
-# find numbers to substitute in the ascii art
+
+# find numbers to be substituted in the ascii art
+substitutions = [[] for i in range(10)]
 for i, c in enumerate(game_data['steps']):
     try:
         substitutions[int(c)].append(i)
     except ValueError:
         pass
 
+
 # prepare game state
 word = random.choice(game_data['words'].split())
-attempts = 5
+
+highest_step = None
+for i in reversed(range(10)):
+    if len(substitutions[i]) > 0:
+        highest_step = i
+        break
+
+allowed_attempts = highest_step if highest_step else 5
+failures = 0
 guesses = set()
 
+
 # begin game
-while attempts > 0:
+while failures <= allowed_attempts:
 
     # Generate the gallows image
     gallows = game_data['steps']
     for k, v in enumerate(substitutions):
         for text_position in substitutions[k]:
-            sub = ' ' if 5 - attempts <= k \
+            sub = ' ' if failures <= k \
                     else game_data['gallows'][text_position]
 
             gallows = gallows[:text_position] + sub + gallows[text_position+1:]
@@ -56,7 +72,7 @@ while attempts > 0:
 
     # Print status information
     print(''.join(c if c in guesses else '_' for c in word))
-    print('Attempts:', attempts)
+    print('Remaining:', allowed_attempts - failures)
 
     # Get player guess
     while True:
@@ -73,7 +89,7 @@ while attempts > 0:
     guesses.add(guess)
 
     if guess not in word:
-        attempts -= 1
+        failures += 1
 
     # End guessing if the player found the word
     if set(word) <= guesses:
