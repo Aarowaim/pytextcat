@@ -6,7 +6,7 @@ The idea is simple:
 ## What is a "Text Catalog"?
 Text storage is a very common problem and I needed a simple, portable format to manage walls of text without polluting my source code.
 Python text catalogs are a simple way to edit, access, and keep track of all the text your program needs.
-They're utf-8 plaintext files formatted into entries, and each entry consists of a *label line* which is followed by *text*. the entry ends when a new *label line* is encountered.
+They're utf-8 plaintext files formatted into entries, and each entry consists of a *label line* which is followed by *text*. the entry ends when a new *label line* is encountered. *text* that ends with a newline does not include the final newline, but does include any previous newlines, to allow a blank line for readability and trim newlines in densely packed data.
 
 Although there are many domain-specific libraries for this purpose, very few of them are generic, simple, and ported to a variety of languages. This format was designed to fill that niche, and it's handy enough to share. It's also simple enough to port.
 
